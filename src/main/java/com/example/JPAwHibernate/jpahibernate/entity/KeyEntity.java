@@ -14,6 +14,6 @@ public class KeyEntity {
     @Column(name = "pk", unique = true)
     @Getter
     @Setter
-    private String pk;
+    private Long pk;
 
 }
