@@ -3,6 +3,7 @@ package com.example.JPAwHibernate.jpahibernate.service;
 import com.example.JPAwHibernate.jpahibernate.entity.*;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface DashboardService {
@@ -20,4 +21,6 @@ public interface DashboardService {
     EmployeeInformation addEmployeeInformation(EmployeeInformation employeeInformation);
     boolean deleteEmployeeInformation(long employeeId);
     EmployeeInformation updateEmployee(EmployeeInformation employeeInformation);
+
+    public HashMap<String, Object> getTodayRevenueDash();
 }

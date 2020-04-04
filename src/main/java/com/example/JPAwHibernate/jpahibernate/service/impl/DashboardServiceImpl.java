@@ -6,7 +6,11 @@ import com.example.JPAwHibernate.jpahibernate.service.DashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class DashboardServiceImpl implements DashboardService {
@@ -25,6 +29,41 @@ public class DashboardServiceImpl implements DashboardService {
 
     @Autowired
     private OrderReceivedRepository orderReceivedRepository;
+
+
+    public HashMap<String, Object> getTodayRevenueDash(){
+
+        HashMap<String, Object> popuplateCompanyRevenue = new HashMap<>();
+
+        List<CompanyRevenueEntity> companyRevenueEntityList = companyRevenueRepository.findAll();
+
+        List<String> label = new ArrayList<>();
+        List<String> _revenue = new ArrayList<>();
+        double totalMargin = 0;
+        double totalExpense = 0;
+        double totalRevenue = 0;
+
+
+
+        Locale locale = new Locale("en", "us");
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
+
+        for (CompanyRevenueEntity companyRevenueEntity : companyRevenueEntityList){
+            label.add(companyRevenueEntity.get_month());
+            _revenue.add(String.valueOf(companyRevenueEntity.getRevenue()));
+            totalMargin += companyRevenueEntity.getMargins();
+            totalExpense += companyRevenueEntity.getExpense();
+            totalRevenue += companyRevenueEntity.getRevenue();
+        }
+
+        popuplateCompanyRevenue.put("crLabels", label.toString());
+        popuplateCompanyRevenue.put("crRevenue", _revenue.toString());
+        popuplateCompanyRevenue.put("totalExpense", currencyFormatter.format(totalExpense));
+        popuplateCompanyRevenue.put("totalMargin", currencyFormatter.format(totalMargin));
+        popuplateCompanyRevenue.put("totalRevenue", currencyFormatter.format(totalRevenue));
+
+        return popuplateCompanyRevenue;
+    }
 
     @Override
     public List<CompanyRevenueEntity> getCompanyRevenue(double revenue) {
