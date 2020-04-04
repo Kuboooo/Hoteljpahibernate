@@ -4,9 +4,11 @@ import com.example.JPAwHibernate.jpahibernate.entity.*;
 import com.example.JPAwHibernate.jpahibernate.repositories.*;
 import com.example.JPAwHibernate.jpahibernate.service.DashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class DashboardServiceImpl implements DashboardService {
 
     @Autowired
@@ -60,13 +62,18 @@ public class DashboardServiceImpl implements DashboardService {
     }
 
     @Override
-    public void addEmployeeInformation(EmployeeInformation employeeInformation) {
-        employeeInformationRepository.save(employeeInformation);
+    public EmployeeInformation addEmployeeInformation(EmployeeInformation employeeInformation) {
+        return employeeInformationRepository.save(employeeInformation);
     }
 
     @Override
-    public void deleteEmployeeInformation(EmployeeInformation employeeInformation) {
-        employeeInformationRepository.delete(employeeInformation);
+    public boolean deleteEmployeeInformation(long employeeId) {
+        EmployeeInformation employeeInformation = employeeInformationRepository.findByPk(employeeId);
+        if (employeeInformation != null){
+            employeeInformationRepository.delete(employeeInformation);
+            return true;
+        }
+        return false;
     }
 
     @Override

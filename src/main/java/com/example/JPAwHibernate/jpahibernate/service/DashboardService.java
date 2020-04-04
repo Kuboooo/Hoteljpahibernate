@@ -1,6 +1,7 @@
 package com.example.JPAwHibernate.jpahibernate.service;
 
 import com.example.JPAwHibernate.jpahibernate.entity.*;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface DashboardService {
     List<OrderReceived> getAllCompanyOrderReceived();
     List<ProductCategory> getAllProductCategory();
 
-    void addEmployeeInformation(EmployeeInformation employeeInformation);
-    void deleteEmployeeInformation(EmployeeInformation employeeInformation);
+    EmployeeInformation addEmployeeInformation(EmployeeInformation employeeInformation);
+    boolean deleteEmployeeInformation(long employeeId);
     EmployeeInformation updateEmployee(EmployeeInformation employeeInformation);
 }
